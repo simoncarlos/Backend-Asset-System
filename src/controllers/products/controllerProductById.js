@@ -1,14 +1,11 @@
 import { productManager } from "../../services/index.js";
 
-export const controllerProductById = async (req, res) => { 
+export const controllerProductById = async (req, res, next) => { 
     try {
-        const { id } = req.body;
-        const product = await productManager.getProductById(id);
-        if (!product) {
-            return res.status(404).json({ message: "Product not found" });
-        }        
-        res.status(200).json(product);
+        const { id } = req.body
+        const product = await productManager.getProductById(id)
+        res.status(200).json(product)
     } catch (error) {
-        res.status(500).json({ "messaje": error.message });
+        next(error)
     }
 } 

@@ -1,8 +1,12 @@
 import { productManager } from "../../services/index.js";  
 
-export const controllerAllProducts = async (req, res) => {
+export const controllerAllProducts = async (req, res, next) => {
     
-    const productList = await productManager.getProducts()
+    try{
+        const productList = await productManager.getProducts()
+        res.status(200).json(productList)
+    }catch(error){
+        next(error)
+    }
 
-    res.json(productList).status(200)
 }

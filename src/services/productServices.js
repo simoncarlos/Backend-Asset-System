@@ -1,5 +1,4 @@
-import { NotFoundError } from "../utils/errors.js";
-
+import { formatProduct, formatProducts } from "../utils/formatProducts.js"
 export class Products {
     #productList
     constructor(productList){
@@ -11,7 +10,20 @@ export class Products {
     }
     async getProductById(id) { 
         const product = await this.#productList.getProductById(id)
-        if(!product) throw new NotFoundError("")
+        return product.dto()
+    }
+    async getProductsByQuery(query) {
+        const products = await this.#productList.getProductsByQuery(query)
+        return products.map(product => product.dto())
+    }
+    async saveObjects(objects) {
+        const formatObjects = formatProducts(objects)
+        const products = await this.#productList.saveObjects(formatObjects)
+        return products.map(product => product.dto())
+    }
+    async updateObject(id, objectUpdated) {
+        const formatObject = formatProduct(objectUpdated)
+        const product = await this.#productList.updateObject(id, formatObject)
         return product.dto()
     }
 }

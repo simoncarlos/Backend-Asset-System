@@ -7,7 +7,6 @@ dotenv.config({ path: '../config/.env' });
 class ProductDaoMongoDb extends MongoDbContainer {
     constructor(){
         super( process.env.PRODUCTS_COLLECTION, {
-            _id:{ type: Object, required: true },
             sequency: { type: Number, required: true },
             typeName: { type: String, required: true },
             descriptionBrand: { type: String, required: true },
@@ -27,7 +26,7 @@ class ProductDaoMongoDb extends MongoDbContainer {
             purchasePriceARS: { type: Number, required: true },
             purchasePriceUSD: { type: Number, required: true },
             exchangeRate: { type: Number, required: true },
-            notes: { type: String, required: true },
+            notes: { type: String },
         })
     }
 }

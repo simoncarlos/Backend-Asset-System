@@ -1,5 +1,5 @@
 import mongoose, { Schema, model } from "mongoose";
-import { NotFoundError } from "../utils/errors.js";
+import { DatabaseError } from "../errors/errors.js";
 
 class MongoDbContainer{
 
@@ -9,62 +9,44 @@ class MongoDbContainer{
 
     async getAllProducts(){
         try {
-            const data = await this.collection.find({})
-            return data
+            const object = await this.collection.find({})
+            return object
         } catch (error) {
-            console.log(error)
+            throw new DatabaseError(error)
         }
     }
     async getProductById(idParam){
         try {
-            const object = await this.collection.findById(new mongoose.Types.ObjectId(idParam));
-            if (!object) {
-                throw new NotFoundError(`Product with id ${idParam} not found`);
-            }
+            const object = await this.collection.findById(new mongoose.Types.ObjectId(idParam))
             return object
         } catch (error) {
-            console.log( `${error}` )
+            throw new DatabaseError(error)
         }
     }
-    async getByParam(param, value) {
+    async getProductsByQuery(query) {
         try {
-            const data = await this.collection.find({ [param]: value });
-            const status = data.length > 0 ? 200 : 404;
-            return {
-                status,
-                data
-            };
+            const object = await this.collection.find(query)
+            return object
         } catch (error) {
-            console.log(`Error al obtener objetos por ${param}: ${error}`);
+            throw new DatabaseError(error)
         }
     }
-    async saveObject(object){
+    async saveObjects(data){
         try{
-            await this.collection.create({...object});
-            return {
-                status: 200
-            }
-        }catch(err){
-            console.log(`Error al guardar el objecto: ${object}. Error: ${err}`)
+            console.log(data)
+            const object = await this.collection.insertMany(data);
+            return object
+        }catch(error){
+            throw new DatabaseError(error)
         }
     }
-    async updateObject( idParam, bodyRequest ){
+    async updateObject(idParam, update){
         try{
-            const response = await this.getObjectById( parseInt(idParam) )
-            if( response.status === 200){
-                await this.collection.updateOne( { id: idParam }, bodyRequest );
-                return {
-                    status: 200,
-                    data: bodyRequest
-                }
-            }else{
-                return {
-                    status: 404,
-                    message: `No se encontró el objeto con el id: ${idParam}`
-                }
-            }
-        }catch(err){
-            console.log(`Error al actualizar el objecto con el id: ${idParam}. Error: ${err}`);
+            const object = await this.getProductById(idParam)
+            const objectUpdated = await this.collection.updateOne( { _id: idParam }, ...update )
+            return objectUpdated
+        }catch(error){
+            throw new DatabaseError(error)
         }
     }
     async deleteObject( idParam ) {

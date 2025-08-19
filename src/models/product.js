@@ -3,6 +3,7 @@ import { requiredField } from '../utils/validations.js';
 export class Product {
 
     #_id
+    #sequency
     #typeName
     #descriptionBrand
     #model
@@ -15,7 +16,7 @@ export class Product {
     #invoiceNumber
     #acCode
     #usageLocation
-    #typeProduc
+    #typeProduct
     #assetCode
     #assetLifeYears
     #purchasePriceARS
@@ -23,9 +24,10 @@ export class Product {
     #exchangeRate
     #notes
 
-    constructor({ _id, typeName, descriptionBrand, model, serialNumber, user, status, activeProduct, creationDate, accountingEntry, invoiceNumber, acCode, usageLocation, typeProduc, assetCode, assetLifeYears, purchasePriceARS, purchasePriceUSD, exchangeRate, notes }) {
+    constructor({ _id, sequency, typeName, descriptionBrand, model, serialNumber, user, status, activeProduct, creationDate, accountingEntry, invoiceNumber, acCode, usageLocation, typeProduct, assetCode, assetLifeYears, purchasePriceARS, purchasePriceUSD, exchangeRate, notes }) {
 
         this.#_id = requiredField(_id)
+        this.#sequency = requiredField(sequency)
         this.#typeName = requiredField(typeName)
         this.#descriptionBrand = requiredField(descriptionBrand)
         this.#model = requiredField(model)
@@ -33,24 +35,24 @@ export class Product {
         this.#user = requiredField(user)
         this.#status = requiredField(status)
         this.#creationDate = requiredField(creationDate)
-        this.#activeProduct = activeProduct || null
-        this.#accountingEntry = accountingEntry || null
-        this.#invoiceNumber = invoiceNumber || null
-        this.#acCode = acCode || null
-        this.#usageLocation = usageLocation || null
-        this.#typeProduc = typeProduc || null
-        this.#assetCode = assetCode || null
-        this.#assetLifeYears = assetLifeYears || null
-        this.#purchasePriceARS = purchasePriceARS || null
-        this.#purchasePriceUSD = purchasePriceUSD || null
-        this.#exchangeRate = exchangeRate || null
-        this.#notes = notes || null
-
+        this.#activeProduct = requiredField(activeProduct || null)
+        this.#accountingEntry = requiredField(accountingEntry || null)
+        this.#invoiceNumber = requiredField(invoiceNumber || null)
+        this.#acCode = requiredField(acCode || null)
+        this.#usageLocation = requiredField(usageLocation || null)
+        this.#typeProduct = requiredField(typeProduct || null)
+        this.#assetCode = requiredField(assetCode || null)
+        this.#assetLifeYears = requiredField(assetLifeYears || null)
+        this.#purchasePriceARS = requiredField(purchasePriceARS || null)
+        this.#purchasePriceUSD = requiredField(purchasePriceUSD || null)
+        this.#exchangeRate = requiredField(exchangeRate || null)
+        this.#notes = requiredField(notes || "")
     }
 
     dto() {
         return {
             _id: this.#_id,
+            sequency: this.#sequency,
             typeName: this.#typeName,
             descriptionBrand: this.#descriptionBrand,
             model: this.#model,
@@ -63,7 +65,7 @@ export class Product {
             invoiceNumber: this.#invoiceNumber,
             acCode: this.#acCode,
             usageLocation: this.#usageLocation,
-            typeProduc: this.#typeProduc,
+            typeProduct: this.#typeProduct,
             assetCode: this.#assetCode,
             assetLifeYears: this.#assetLifeYears,
             purchasePriceARS: this.#purchasePriceARS,
