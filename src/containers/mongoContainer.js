@@ -7,7 +7,7 @@ class MongoDbContainer{
         this.collection = mongoose.model( nameCollection, new Schema(schema), nameCollection)
     }
 
-    async getAllProducts(){
+    async getAllObjects(){
         try {
             const object = await this.collection.find({})
             return object
@@ -15,7 +15,7 @@ class MongoDbContainer{
             throw new DatabaseError(error)
         }
     }
-    async getProductById(idParam){
+    async getObjectById(idParam){
         try {
             const object = await this.collection.findById(new mongoose.Types.ObjectId(idParam))
             return object
@@ -23,7 +23,7 @@ class MongoDbContainer{
             throw new DatabaseError(error)
         }
     }
-    async getProductsByQuery(query) {
+    async getObjectsByQuery(query) {
         try {
             const object = await this.collection.find(query)
             return object
@@ -31,19 +31,25 @@ class MongoDbContainer{
             throw new DatabaseError(error)
         }
     }
-    async saveObjects(data){
+    async saveObject(data){
         try{
-            console.log(data)
-            const object = await this.collection.insertMany(data);
+            const object = await this.collection.create(data);
             return object
+        }catch(error){
+            throw new DatabaseError(error)
+        }
+    }
+    async saveObjectList(arrayObjects){
+        try{
+            const objects = await this.collection.insertMany(arrayObjects);
+            return objects
         }catch(error){
             throw new DatabaseError(error)
         }
     }
     async updateObject(idParam, update){
         try{
-            const object = await this.getProductById(idParam)
-            const objectUpdated = await this.collection.updateOne( { _id: idParam }, ...update )
+            const objectUpdated = await this.collection.findByIdAndUpdate( { _id: idParam }, update, { new: true } )
             return objectUpdated
         }catch(error){
             throw new DatabaseError(error)
@@ -51,15 +57,10 @@ class MongoDbContainer{
     }
     async deleteObject( idParam ) {
         try{
-            const response = await this.getObjectById( idParam);
-            if( response.status==200 ){
-                await this.collection.deleteOne( { id: idParam } );
-                return { status: 200 }
-            }else{
-                return { status: 404 }
-            }
-        }catch(err){
-            console.log(`Error al eliminar el objecto con el id: ${idParam}. Error: ${err}`);
+            const objectDeleted = await this.collection.findByIdAndDelete( { _id: idParam } );
+            return objectDeleted
+        }catch(error){
+            throw new DatabaseError(error)
         }
     }
 

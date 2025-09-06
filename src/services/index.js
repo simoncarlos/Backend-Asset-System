@@ -1,4 +1,4 @@
-import { productList} from "../repositories/index.js";
-import { Products } from "./productServices.js";
+import { productList, keyQrList} from "../repositories/index.js";
+import { AssetManager } from "./assetServices.js";
 
-export const productManager = new Products( productList )
+export const productManager = new AssetManager( productList, keyQrList );

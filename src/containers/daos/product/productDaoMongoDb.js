@@ -1,4 +1,3 @@
-import { model } from "mongoose";
 import MongoDbContainer from "../../mongoContainer.js";
 import dotenv from "dotenv";
 
@@ -27,6 +26,7 @@ class ProductDaoMongoDb extends MongoDbContainer {
             purchasePriceUSD: { type: Number, required: true },
             exchangeRate: { type: Number, required: true },
             notes: { type: String },
+            checkDate: { type: Date, required: true }
         })
     }
 }

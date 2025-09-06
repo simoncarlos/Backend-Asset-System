@@ -23,8 +23,9 @@ export class Product {
     #purchasePriceUSD
     #exchangeRate
     #notes
+    #checkDate
 
-    constructor({ _id, sequency, typeName, descriptionBrand, model, serialNumber, user, status, activeProduct, creationDate, accountingEntry, invoiceNumber, acCode, usageLocation, typeProduct, assetCode, assetLifeYears, purchasePriceARS, purchasePriceUSD, exchangeRate, notes }) {
+    constructor({ _id, sequency, typeName, descriptionBrand, model, serialNumber, user, status, activeProduct, creationDate, accountingEntry, invoiceNumber, acCode, usageLocation, typeProduct, assetCode, assetLifeYears, purchasePriceARS, purchasePriceUSD, exchangeRate, notes, checkDate }) {
 
         this.#_id = requiredField(_id)
         this.#sequency = requiredField(sequency)
@@ -46,7 +47,8 @@ export class Product {
         this.#purchasePriceARS = requiredField(purchasePriceARS || null)
         this.#purchasePriceUSD = requiredField(purchasePriceUSD || null)
         this.#exchangeRate = requiredField(exchangeRate || null)
-        this.#notes = requiredField(notes || "")
+        this.#notes = requiredField(notes)
+        this.#checkDate = requiredField(checkDate)
     }
 
     dto() {
@@ -71,7 +73,8 @@ export class Product {
             purchasePriceARS: this.#purchasePriceARS,
             purchasePriceUSD: this.#purchasePriceUSD,
             exchangeRate: this.#exchangeRate,
-            notes: this.#notes
+            notes: this.#notes,
+            checkDate: this.#checkDate
         }
     }   
 

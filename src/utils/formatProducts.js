@@ -1,4 +1,4 @@
-export const formatProducts = (products) => {
+export const formatProductList = (products) => {
 
     const formatProducts = products.map(object => {
         return formatProduct(object)
@@ -20,5 +20,6 @@ export const formatProduct = (object) => {
     object.purchasePriceUSD = parseFloat(object.purchasePriceUSD)
     object.exchangeRate = parseFloat(object.exchangeRate)
     object.notes = object.notes || ""
+    object.checkDate = new Date()
     return object
 }
