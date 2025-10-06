@@ -4,14 +4,17 @@ import {
     controllerGetProductsByQuery,
     controllerUpdateProduct
 } from "../controllers/controllerProducts.js";
+import { 
+    sessionMiddleware 
+} from "../middlewares/sessionMiddleware.js";
 
 const routerGetAllProducts = new Router();
 const routerGetProductsByQuery = new Router();
 const routercontrollerUpdateProduct = new Router();
 
-routerGetAllProducts.get("/", controllerGetAllProducts);
-routerGetProductsByQuery.get("/", controllerGetProductsByQuery);
-routercontrollerUpdateProduct.put("/", controllerUpdateProduct);
+routerGetAllProducts.get("/", sessionMiddleware,controllerGetAllProducts);
+routerGetProductsByQuery.get("/", sessionMiddleware, controllerGetProductsByQuery);
+routercontrollerUpdateProduct.put("/", sessionMiddleware, controllerUpdateProduct);
 
 export { 
     routerGetAllProducts,

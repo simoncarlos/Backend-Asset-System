@@ -1,11 +1,10 @@
+import setting_process_env from "../../../utils/settingEnviroment.js";
 import MongoDbContainer from "../../mongoContainer.js";
-import dotenv from "dotenv";
 
-dotenv.config({ path: '../config/.env' });
-
+const collection = setting_process_env.db.collection.products;
 class ProductDaoMongoDb extends MongoDbContainer {
     constructor(){
-        super( process.env.PRODUCTS_COLLECTION, {
+        super( collection, {
             sequency: { type: Number, required: true },
             typeName: { type: String, required: true },
             descriptionBrand: { type: String, required: true },

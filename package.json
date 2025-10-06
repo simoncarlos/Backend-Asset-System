@@ -7,12 +7,18 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cd src && node --watch main.js"
+    "dev": "node --env-file=.env --env-file=.env.development --watch ./src/main.js",
+    "test": "node --env-file=.env --env-file=.env.testing     --watch ./src/main.js",
+    "prod": "node --env-file=.env --env-file=.env.production  --watch ./src/main.js"
   },
   "dependencies": {
-    "dotenv": "^17.2.1",
+    "ajv": "^8.17.1",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
-    "mongoose": "^8.17.1"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.17.1",
+    "winston": "^3.18.3"
   }
 }

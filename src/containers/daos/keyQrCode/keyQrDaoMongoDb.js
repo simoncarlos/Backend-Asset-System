@@ -1,11 +1,10 @@
+import setting_process_env from "../../../utils/settingEnviroment.js";
 import MongoDbContainer from "../../mongoContainer.js";
-import dotenv from "dotenv";
 
-dotenv.config({ path: '../config/.env' });
-
+const collection = setting_process_env.db.collection.keyQrs;
 class KeyQrDaoMongoDb extends MongoDbContainer {
     constructor(){
-        super( process.env.KEYS_COLLECTION, {
+        super( collection, {
             assetId: { type: String, required: true },
             assetCode: { type: String, required: true }
         })
