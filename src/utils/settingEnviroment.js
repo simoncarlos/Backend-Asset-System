@@ -19,7 +19,10 @@ const setting_process_env = {
         expiresIn: process.env.JWT_EXPIRES_IN || '1h',
     },
     cors_origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
-    type_pers: process.env.TYPE_PERS || 'MONGODB'
+    type_pers: process.env.TYPE_PERS || 'MONGODB',
+    logs: {
+        path: process.env.LOGS_PATH || 'logs'
+    }
 }
 
 export default setting_process_env;

@@ -3,7 +3,6 @@ import { unauthorizedError } from "../errors/errors.js"
 
 export const sessionMiddleware = (req, res, next) => {
     const token = req.cookies.authToken
-    console.log("El valor de las cookies son: " + req.cookies.authToken)
     
     if(!token) throw new unauthorizedError('Authentication required')
     let data = null
